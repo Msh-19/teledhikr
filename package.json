@@ -1,0 +1,30 @@
+{
+  "name": "teledhikr",
+  "version": "1.0.0",
+  "description": "Islamic Daily Remembrance Telegram Bot",
+  "type": "module",
+  "main": "dist/main.js",
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/main.js",
+    "dev": "tsx src/main.ts",
+    "init-db": "tsx scripts/init-db.ts",
+    "seed": "tsx scripts/seed-adhkar.ts && tsx scripts/seed-content.ts && tsx scripts/seed-hijri-events.ts",
+    "seed:adhkar": "tsx scripts/seed-adhkar.ts",
+    "seed:content": "tsx scripts/seed-content.ts",
+    "seed:hijri": "tsx scripts/seed-hijri-events.ts"
+  },
+  "dependencies": {
+    "telegraf": "^4.16.3",
+    "pg": "^8.13.1",
+    "date-fns": "^4.1.0",
+    "date-fns-tz": "^3.2.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.7.0",
+    "tsx": "^4.19.0",
+    "@types/pg": "^8.11.10",
+    "@types/node": "^22.10.0",
+    "dotenv": "^16.4.7"
+  }
+}

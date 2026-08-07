@@ -1,0 +1,25 @@
+services:
+  - type: cron
+    name: teledhikr-bot
+    runtime: node
+    plan: free
+    schedule: "*/15 * * * *"
+    buildCommand: npm install && npm run build && npm run init-db
+    startCommand: node dist/main.js
+    envVars:
+      - key: DATABASE_URL
+        sync: false  # Set to your Neon connection string
+      - key: BOT_TOKEN
+        sync: false
+      - key: CHAT_ID
+        sync: false
+      - key: LATITUDE
+        sync: false
+      - key: LONGITUDE
+        sync: false
+      - key: TIMEZONE
+        sync: false
+      - key: PRAYER_METHOD
+        sync: false
+      - key: NODE_ENV
+        value: production
