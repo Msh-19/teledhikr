@@ -3,10 +3,10 @@
   "version": "1.0.0",
   "description": "Islamic Daily Remembrance Telegram Bot",
   "type": "module",
-  "main": "dist/main.js",
+  "main": "dist/src/main.js",
   "scripts": {
     "build": "tsc",
-    "start": "node dist/main.js",
+    "start": "node dist/src/main.js",
     "dev": "tsx src/main.ts",
     "init-db": "tsx scripts/init-db.ts",
     "seed": "tsx scripts/seed-adhkar.ts && tsx scripts/seed-content.ts && tsx scripts/seed-hijri-events.ts",
