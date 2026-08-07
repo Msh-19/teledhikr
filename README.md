@@ -32,8 +32,8 @@ Render Cron Job (every 15 min)
 
 - **Runtime**: Node.js + TypeScript
 - **Bot**: Telegraf (Telegram Bot API)
-- **Database**: PostgreSQL ([Neon](https://neon.tech) — free tier, serverless)
-- **Hosting**: Render Cron Job
+- **Database**: PostgreSQL ([Neon](https://neon.tech) — free tier)
+- **Hosting**: GitHub Actions Scheduled Workflow (100% free)
 - **External API**: [Aladhan](https://aladhan.com/prayer-times-api) (prayer times + Hijri date)
 
 ## Setup
@@ -53,7 +53,7 @@ npm install
 
 # Copy and configure environment
 cp .env.example .env
-# Edit .env with your values (see Neon setup below)
+# Edit .env with your values
 
 # Initialize database tables
 npm run init-db
@@ -61,45 +61,24 @@ npm run init-db
 # Seed data
 npm run seed
 
-# Run once
+# Run once locally
 npm run dev
 ```
 
-### Neon Database Setup
+### GitHub Actions Deployment (100% Free)
 
-1. Create a free account at [neon.tech](https://neon.tech)
-2. Create a new project (any region)
-3. Go to **Connection Details** in your project dashboard
-4. Copy the connection string — it looks like:
-   ```
-   postgresql://user:pass@ep-example-123456.us-east-2.aws.neon.tech/neondb?sslmode=require
-   ```
-5. Paste it as `DATABASE_URL` in your `.env` file
-
-### Environment Variables
-
-| Variable | Required | Description |
-|---|---|---|
-| `DATABASE_URL` | ✅ | Neon PostgreSQL connection string |
-| `BOT_TOKEN` | ✅ | Telegram bot token |
-| `CHAT_ID` | ✅ | Telegram chat ID to send messages to |
-| `LATITUDE` | ✅ | Location latitude for prayer times |
-| `LONGITUDE` | ✅ | Location longitude for prayer times |
-| `TIMEZONE` | ✅ | IANA timezone (e.g., `Asia/Riyadh`) |
-| `PRAYER_METHOD` | ❌ | Aladhan calculation method (default: `4` = Umm al-Qura) |
-
-### Deploy to Render
-
-1. Push code to a Git repository
-2. In Render dashboard, click **New** → **Blueprint**
-3. Connect your repo — Render will detect `render.yaml`
-4. Set the environment variables:
-   - `DATABASE_URL` — your Neon connection string
-   - `BOT_TOKEN`, `CHAT_ID`, `LATITUDE`, `LONGITUDE`, `TIMEZONE`
-5. After first deploy, run the seed scripts (locally, pointing at your Neon DB):
-   ```bash
-   DATABASE_URL="your_neon_connection_string" npm run seed
-   ```
+1. Push your repository to GitHub.
+2. In your GitHub repository, go to **Settings** → **Secrets and variables** → **Actions**.
+3. Click **New repository secret** and add the following secrets:
+   - `DATABASE_URL`: Your Neon connection string
+   - `BOT_TOKEN`: Your Telegram bot token
+   - `CHAT_ID`: Your Telegram chat ID
+   - `LATITUDE`: `9.0192` (or your latitude)
+   - `LONGITUDE`: `38.7525` (or your longitude)
+   - `TIMEZONE`: `Africa/Addis_Ababa` (or your timezone)
+   - `PRAYER_METHOD`: `3`
+4. That's it! GitHub Actions will run the bot automatically every 15 minutes.
+5. You can also trigger a manual run anytime from the **Actions** tab in GitHub by selecting **TeleDhikr Cron Job** → **Run workflow**.
 
 ## Project Structure
 

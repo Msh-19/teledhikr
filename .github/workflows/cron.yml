@@ -1,0 +1,38 @@
+name: TeleDhikr Cron Job
+
+on:
+  schedule:
+    # Run every 15 minutes
+    - cron: '*/15 * * * *'
+  # Allow manual execution from GitHub Actions UI
+  workflow_dispatch:
+
+jobs:
+  run-bot:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build project
+        run: npm run build
+
+      - name: Run TeleDhikr Bot
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
+          CHAT_ID: ${{ secrets.CHAT_ID }}
+          LATITUDE: ${{ secrets.LATITUDE }}
+          LONGITUDE: ${{ secrets.LONGITUDE }}
+          TIMEZONE: ${{ secrets.TIMEZONE }}
+          PRAYER_METHOD: ${{ secrets.PRAYER_METHOD }}
+        run: node dist/main.js

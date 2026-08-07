@@ -2,7 +2,6 @@ services:
   - type: cron
     name: teledhikr-bot
     runtime: node
-    plan: free
     schedule: "*/15 * * * *"
     buildCommand: npm install && npm run build && npm run init-db
     startCommand: node dist/main.js
