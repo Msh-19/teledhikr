@@ -26,13 +26,17 @@ jobs:
       - name: Build project
         run: npm run build
 
+      - name: Verify build output
+        run: |
+          test -f dist/src/main.js || (echo "dist/src/main.js not found after build" && ls -la dist/src || true && exit 1)
+
       - name: Run TeleDhikr Bot
         env:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
           BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
           CHAT_ID: ${{ secrets.CHAT_ID }}
-          LATITUDE: '9.0192'
-          LONGITUDE: '38.7525'
-          TIMEZONE: 'Africa/Addis_Ababa'
-          PRAYER_METHOD: '3'
-        run: node dist/src/main.js
+          LATITUDE: ${{ secrets.LATITUDE }}
+          LONGITUDE: ${{ secrets.LONGITUDE }}
+          TIMEZONE: ${{ secrets.TIMEZONE }}
+          PRAYER_METHOD: ${{ secrets.PRAYER_METHOD }}
+        run: npm start
