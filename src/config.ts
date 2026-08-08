@@ -25,7 +25,7 @@ export const config = {
 
 // Constants
 export const ADHKAR_DELAY_MS = 2500;
-export const PRAYER_REMINDER_WINDOW_MINUTES = 15;
+export const PRAYER_REMINDER_WINDOW_MINUTES = 35;
 export const MORNING_ADHKAR_OFFSET_MINUTES = 20; // minutes after Fajr
 export const EVENING_ADHKAR_BEFORE_MAGHRIB_MINUTES = 30; // minutes before Maghrib
 export const GENERAL_DHIKR_COOLDOWN_HOURS = 3;
