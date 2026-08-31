@@ -28,6 +28,7 @@ async function initDb(): Promise<void> {
       hijri_day INT NOT NULL,
       hijri_month_days INT NOT NULL DEFAULT 30,
       fajr TEXT NOT NULL,
+      sunrise TEXT,
       dhuhr TEXT NOT NULL,
       asr TEXT NOT NULL,
       maghrib TEXT NOT NULL,

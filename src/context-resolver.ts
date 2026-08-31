@@ -71,8 +71,13 @@ export async function resolveTriggers(
   const dayOfWeek = getDayOfWeek(now);
   const tomorrowHijri = getTomorrowHijri(todayCtx);
 
-  // 1. Morning Adhkar — between Fajr+20min and Dhuhr
-  if (isBetween(current, todayCtx.fajr, todayCtx.dhuhr, MORNING_ADHKAR_OFFSET_MINUTES)) {
+  // 1. Morning Adhkar — between Fajr+20min and Sunrise+90min (early morning window)
+  const fajrStart = timeToMinutes(todayCtx.fajr) + MORNING_ADHKAR_OFFSET_MINUTES;
+  const morningEnd = todayCtx.sunrise
+    ? timeToMinutes(todayCtx.sunrise) + 90
+    : timeToMinutes('09:30');
+
+  if (current >= fajrStart && current <= morningEnd) {
     const rows = await query<AdhkarRow>(
       `SELECT id, "order", session, arabic, translation, transliteration,
               repeat_count AS "repeatCount", virtue, source

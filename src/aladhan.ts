@@ -66,6 +66,7 @@ async function fetchFromAladhan(date: string): Promise<DailyContext> {
     hijriDay: parseInt(hijri.day, 10),
     hijriMonthDays: hijri.month.days,
     fajr: cleanTime(timings.Fajr),
+    sunrise: cleanTime(timings.Sunrise),
     dhuhr: cleanTime(timings.Dhuhr),
     asr: cleanTime(timings.Asr),
     maghrib: cleanTime(timings.Maghrib),
@@ -90,6 +91,7 @@ export async function getDailyContext(date: string): Promise<DailyContext> {
       hijriDay: row.hijri_day,
       hijriMonthDays: row.hijri_month_days,
       fajr: row.fajr,
+      sunrise: row.sunrise || '06:17',
       dhuhr: row.dhuhr,
       asr: row.asr,
       maghrib: row.maghrib,
@@ -101,8 +103,8 @@ export async function getDailyContext(date: string): Promise<DailyContext> {
   const context = await fetchFromAladhan(date);
 
   await query(
-    `INSERT INTO daily_context (date, hijri_date, hijri_month, hijri_day, hijri_month_days, fajr, dhuhr, asr, maghrib, isha)
-     VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
+    `INSERT INTO daily_context (date, hijri_date, hijri_month, hijri_day, hijri_month_days, fajr, sunrise, dhuhr, asr, maghrib, isha)
+     VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)
      ON CONFLICT (date) DO NOTHING`,
     [
       context.date,
@@ -111,6 +113,7 @@ export async function getDailyContext(date: string): Promise<DailyContext> {
       context.hijriDay,
       context.hijriMonthDays,
       context.fajr,
+      context.sunrise,
       context.dhuhr,
       context.asr,
       context.maghrib,

@@ -6,6 +6,7 @@ export interface DailyContext {
   hijriDay: number;
   hijriMonthDays: number; // total days in the Hijri month (29 or 30)
   fajr: string; // HH:MM
+  sunrise: string;
   dhuhr: string;
   asr: string;
   maghrib: string;
