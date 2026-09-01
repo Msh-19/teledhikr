@@ -35,6 +35,11 @@ async function initDb(): Promise<void> {
       isha TEXT NOT NULL
     );
   `);
+
+  await pool.query(`
+    ALTER TABLE daily_context
+    ADD COLUMN IF NOT EXISTS sunrise TEXT;
+  `);
   console.log('[init-db] ✅ daily_context');
 
   await pool.query(`
